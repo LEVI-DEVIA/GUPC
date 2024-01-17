@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\web\UtilisateurController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,5 +30,9 @@ Route::get('/register',[AuthController::class,'Vuregister'])->name('register');
 
 //dashbord
 Route::get('/admin',[AdminController::class,'index'])->name('admin');
+Route::get('/dashboard',[UtilisateurController::class,'dashboard'])->name('dashboard');
+Route::post('/ajout',[UtilisateurController::class,'ajouterUtilisateur'])->name('ajout');
+
+
 
 

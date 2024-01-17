@@ -150,11 +150,12 @@
           <th>Nom</th>
           <th>Email</th>
           <th>Permissions</th>
+          <th>Password</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="userTableBody">
         <!-- Utilisateurs seront affichés ici dynamiquement -->
-      </tbody>
+    </tbody>
     </table>
   </div>
 
@@ -165,6 +166,7 @@
   <div id="createUserModal" class="modal">
     <h2>Créer un utilisateur</h2>
     <form id="createUserForm">
+      @csrf
       <label for="newUserName">Nom:</label>
       <input type="text" id="newUserName" name="newUserName" required>
 
@@ -174,39 +176,102 @@
       <label for="newUserPermissions">Permissions:</label>
       <input type="text" id="newUserPermissions" name="newUserPermissions" placeholder="Séparées par des virgules">
 
+      <label for="newUserPassword">Password:</label>
+      <input type="text" id="newUserPassword" name="newUserPassword" placeholder="Entrer le password">
+
       <button type="submit">Créer</button>
     </form>
   </div>
 
-  <script>
-    document.getElementById("createUserBtn").addEventListener("click", function() {
-      document.getElementById("overlay").style.display = "block";
-      document.getElementById("createUserModal").style.display = "block";
-    });
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      // Récupérer et afficher les utilisateurs au chargement de la page
+      fetch('/dashboard')
+          .then(response => response.json())
+          .then(users => {
+              const tableBody = document.getElementById('userTableBody');
 
-    document.getElementById("createUserForm").addEventListener("submit", function(event) {
-      event.preventDefault();
+              users.forEach(user => {
+                  const row = tableBody.insertRow();
+                  row.insertCell(0).textContent = user.name;
+                  row.insertCell(1).textContent = user.email;
+                  row.insertCell(2).textContent = user.permission;
+                  row.insertCell(3).textContent = user.password;
+              });
+          })
+          .catch(error => {
+              console.error('Erreur lors de la récupération des utilisateurs:', error);
+          });
 
-      // Récupérer les valeurs du formulaire
-      var userName = document.getElementById("newUserName").value;
-      var userEmail = document.getElementById("newUserEmail").value;
-      var userPermissions = document.getElementById("newUserPermissions").value.split(",");
+      // Cibler le bouton "Créer un utilisateur"
+      var createUserBtn = document.getElementById("createUserBtn");
 
-      // Ajouter une nouvelle ligne au tableau
-      var tableBody = document.querySelector("table tbody");
-      var newRow = tableBody.insertRow(tableBody.rows.length);
-      var nameCell = newRow.insertCell(0);
-      var emailCell = newRow.insertCell(1);
-      var permissionsCell = newRow.insertCell(2);
+      // Vérifier si le bouton existe avant d'attacher l'événement
+      if (createUserBtn) {
+          createUserBtn.addEventListener("click", function() {
+              document.getElementById("overlay").style.display = "block";
+              document.getElementById("createUserModal").style.display = "block";
+          });
+      }
 
-      nameCell.textContent = userName;
-      emailCell.textContent = userEmail;
-      permissionsCell.textContent = userPermissions.join(", ");
+      // Cibler le formulaire de création d'utilisateur
+      var createUserForm = document.getElementById("createUserForm");
 
-      // Fermer la modal et l'overlay
-      document.getElementById("createUserModal").style.display = "none";
-      document.getElementById("overlay").style.display = "none";
-    });
-  </script>
+      // Vérifier si le formulaire existe avant d'attacher l'événement
+      if (createUserForm) {
+          createUserForm.addEventListener("submit", function(event) {
+              event.preventDefault();
+
+              // Récupérer les valeurs du formulaire
+              var userName = document.getElementById("newUserName").value;
+              var userEmail = document.getElementById("newUserEmail").value;
+              var userPermissions = document.getElementById("newUserPermissions").value;
+              var userPassword = document.getElementById("newUserPassword").value;
+
+              // Envoyer la requête POST à la route de création d'utilisateur
+              fetch('/ajout', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                  },
+                  body: JSON.stringify({
+                      name: userName,
+                      email: userEmail,
+                      permission: userPermissions,
+                      password: userPassword,
+                  }),
+              })
+              .then(response => response.json())
+              .then(data => {
+                  // Ajouter une nouvelle ligne au tableau
+                  var tableBody = document.querySelector("table tbody");
+                  var newRow = tableBody.insertRow(tableBody.rows.length);
+                  var nameCell = newRow.insertCell(0);
+                  var emailCell = newRow.insertCell(1);
+                  var permissionsCell = newRow.insertCell(2);
+                  var passwordCell = newRow.insertCell(3);
+
+                  nameCell.textContent = data.name;
+                  emailCell.textContent = data.email;
+                  permissionsCell.textContent = data.permission.join(", ");
+                  passwordCell.textContent = data.password;
+
+                  // Fermer la modal et l'overlay après un certain délai (1 seconde dans cet exemple)
+                  setTimeout(function() {
+                      document.getElementById("createUserModal").style.display = "none";
+                      document.getElementById("overlay").style.display = "none";
+                      window.location.reload();
+                  }, 1000);
+              })
+              .catch(error => {
+                  console.error('Erreur lors de la création d\'utilisateur:', error);
+              });
+          });
+      }
+  });
+</script>
+
+
 </body>
 </html>
