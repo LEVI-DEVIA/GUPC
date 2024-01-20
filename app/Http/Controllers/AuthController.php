@@ -22,6 +22,11 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
+    public function logout(Request $request)
+    {
+        return view('auth.login');
+    }
+
         public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -47,13 +52,18 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|confirmed',
         ]);
-        $user = new User();
-        $user->name = $credentials['name'];
-        $user->email = $credentials['email'];
-        $user->password = Hash::make($credentials['password']);
-        $user->save(); // marcher ?
-
-        return redirect()->route('login')->with('success', 'Votre compte a été créé avec succès.');
+    
+        try {
+            $user = new User();
+            $user->name = $credentials['name'];
+            $user->email = $credentials['email'];
+            $user->password = Hash::make($credentials['password']);
+            $user->save();
+    
+            return redirect()->route('login')->with('success', 'Votre compte a été créé avec succès.');
+        } catch (\Exception $e) {
+            return redirect()->route('register')->with('error', 'Une erreur est survenue lors de la création du compte.');
+        }
     }
 
 

@@ -60,6 +60,12 @@
   <div class="container">
     <form action="{{ route('register') }}" method="post">
       @csrf
+      @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+      @endif
+      @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+      @endif
       <div class="form-group">
         <label for="name">Nom</label>
         <input type="text" id="name" name="name" required>
@@ -69,7 +75,7 @@
         <input type="email" id="email" name="email" required>
       </div>
       <div class="form-group">
-        <label for="password">Mot de passe</label>
+        <label for="password">Mot de passe (minimum 8 caractères)</label>
         <input type="password" id="password" name="password" required>
       </div>
       <div class="form-group">
@@ -77,7 +83,7 @@
         <input type="password" id="password_confirmation" name="password_confirmation" required>
       </div>
       <button type="submit">S'inscrire</button>
-      <a href="{{ route('login') }}">Se connecter à un compte</a>
+      <a href="{{ route('login/admin') }}">Se connecter à un compte</a>
     </form>
   </div>
 </body>

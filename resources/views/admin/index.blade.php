@@ -144,6 +144,12 @@
     <h2>Gestion des utilisateurs</h2>
     <button id="createUserBtn">Créer un utilisateur</button>
 
+    <form action="{{ route('/logout/admin') }}" method="post">
+      @csrf
+      <button type="submit">Déconnexion</button>
+  </form>
+
+
     <table>
       <thead>
         <tr>
@@ -213,6 +219,18 @@
               document.getElementById("createUserModal").style.display = "block";
           });
       }
+
+      //cibler le bouton de logout
+      var logoutForm = document.querySelector('form[action="{{ route("logout/admin") }}"]');
+      if (logoutForm) {
+            logoutForm.addEventListener("submit", function () {
+                // Vous pouvez également ajouter une confirmation ici si nécessaire
+                // window.confirm("Êtes-vous sûr de vouloir vous déconnecter?");
+
+                // Après la déconnexion, rediriger l'utilisateur vers la route "login"
+                window.location.href = "{{ route('login/admin') }}";
+            });
+        }
 
       // Cibler le formulaire de création d'utilisateur
       var createUserForm = document.getElementById("createUserForm");

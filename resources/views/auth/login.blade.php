@@ -58,8 +58,11 @@
 </head>
 <body>
   <div class="container">
-    <form action="{{ route('login') }}" method="post">
+    <form action="{{ route('/login/admin') }}" method="post">
       @csrf
+      @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+      @endif
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" value="{{ old('email') }}" required>
@@ -69,7 +72,7 @@
         <input type="password" id="password" name="password" required>
       </div>
       <button type="submit">Se connecter</button>
-      <a href="{{ route('register') }}">Créer un compte</a>
+      <a href="{{ route('register/admin') }}">Créer un compte</a>
     </form>
   </div>
 </body>

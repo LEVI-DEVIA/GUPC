@@ -20,19 +20,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//login
-Route::post('/login',[AuthController::class,'login'])->name('login');
-Route::get('/login',[AuthController::class,'Vulogin'])->name('login');
+//login_admin
+Route::post('/login/admin',[AuthController::class,'login'])->name('/login/admin');
+Route::get('/login/admin',[AuthController::class,'Vulogin'])->name('login/admin');
 
-//register
-Route::post('/register',[AuthController::class,'register'])->name('register');
-Route::get('/register',[AuthController::class,'Vuregister'])->name('register');
+//register_admin
+Route::post('/register/admin',[AuthController::class,'register'])->name('register/admin');
+Route::get('/register/admin',[AuthController::class,'Vuregister'])->name('register/admin');
 
-//dashbord
+//dashbord_admin
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard',[UtilisateurController::class,'dashboard'])->name('dashboard');
+    Route::post('/ajout',[UtilisateurController::class,'ajouterUtilisateur'])->name('ajout');
+});
 Route::get('/admin',[AdminController::class,'index'])->name('admin');
-Route::get('/dashboard',[UtilisateurController::class,'dashboard'])->name('dashboard');
-Route::post('/ajout',[UtilisateurController::class,'ajouterUtilisateur'])->name('ajout');
+
+//deconexion_admin
+Route::post('/logout/admin',[AuthController::class,'logout'])->name('logout/admin');
 
 
+
+//login_users
+Route::post('/login/user',[AuthController::class,'login'])->name('/login');
 
 
