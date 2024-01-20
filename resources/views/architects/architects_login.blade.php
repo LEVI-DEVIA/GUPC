@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inscription</title>
+  <title>Connexion</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -42,7 +42,7 @@
     }
 
     button {
-      background-color: #28a745;
+      background-color: #007bff;
       color: #fff;
       padding: 10px 20px;
       border: none;
@@ -52,38 +52,26 @@
     }
 
     button:hover {
-      background-color: #218838;
+      background-color: #0056b3;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <form action="{{ route('register/admin') }}" method="post">
+    <form action="{{ route('/login/user') }}" method="post">
       @csrf
-      @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-      @endif
       @if (session('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>
       @endif
       <div class="form-group">
-        <label for="name">Nom</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" value="{{ old('email') }}" required>
       </div>
       <div class="form-group">
-        <label for="password">Mot de passe (minimum 8 caractères)</label>
+        <label for="password">Mot de passe</label>
         <input type="password" id="password" name="password" required>
       </div>
-      <div class="form-group">
-        <label for="password_confirmation">Confirmation du mot de passe</label>
-        <input type="password" id="password_confirmation" name="password_confirmation" required>
-      </div>
-      <button type="submit">S'inscrire</button>
-      <a href="{{ route('login/admin') }}">Se connecter à un compte</a>
+      <button type="submit">Se connecter</button>
     </form>
   </div>
 </body>

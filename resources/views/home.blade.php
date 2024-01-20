@@ -49,7 +49,13 @@
 						</ul>
 					</li>
 					<li><a href="contact.html">Contact</a></li>
-					<li><a class="btn" href="{{ route('login/admin') }}">Connexion  </a></li>
+					@guest
+						<!-- Afficher le bouton de connexion uniquement si l'utilisateur n'est pas connecté -->
+						<li><a class="btn" href="{{ route('/login/user') }}">Connexion</a></li>
+					@else
+						<!-- Afficher le nom de l'utilisateur s'il est connecté -->
+						<!-- <li><a href="#">{{ Auth::user()->name }}</a></li>-->
+					@endguest
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>

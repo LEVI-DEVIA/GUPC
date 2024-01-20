@@ -138,7 +138,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Bienvenue sur l'administration</h1>
+    <h1>Bienvenue cher Architect</h1>
     <p>Ici, vous pouvez gérer votre site web.</p>
 
     <h2>Gestion des utilisateurs</h2>

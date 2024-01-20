@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\web\ArchitectsController;
 use App\Http\Controllers\web\UtilisateurController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 //login_admin
@@ -35,12 +36,12 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::get('/admin',[AdminController::class,'index'])->name('admin');
 
-//deconexion_admin
-Route::post('/logout/admin',[AuthController::class,'logout'])->name('logout/admin');
-
-
 
 //login_users
-Route::post('/login/user',[AuthController::class,'login'])->name('/login');
+Route::post('/login/user',[ArchitectsController::class,'loginArchitects'])->name('/login/user');
+Route::get('/login/user',[ArchitectsController::class,'index'])->name('/login/user');
+
+//dashboard_architects
+Route::get('perso',[ArchitectsController::class,'dashboard_architects'])->name('perso');
 
 

@@ -3,19 +3,16 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Utilisateur;
 use Illuminate\Http\Request;
 
-class UtilisateurController extends Controller
+class Demande_PermisController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function dashboard()
+    public function index()
     {
-        $utilisateurs = Utilisateur::all();
-
-        return response()->json($utilisateurs);
+        //
     }
 
     /**
@@ -29,22 +26,9 @@ class UtilisateurController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function ajouterUtilisateur(Request $request)
+    public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email:utilisateurs',
-            'password' => 'required',
-        ]);
-    
-        $nouvelUtilisateur = Utilisateur::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
-
-        return redirect()->intended(route('admin'));
-        
+        //
     }
 
     /**

@@ -22,11 +22,6 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function logout(Request $request)
-    {
-        return view('auth.login');
-    }
-
         public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -37,7 +32,7 @@ class AuthController extends Controller
         $user = User::where('email', $credentials['email'])->first();
 
         if (! $user || ! Hash::check($credentials['password'], $user->password)) {
-            return redirect()->route('login')->with('error', 'Les informations de connexion sont incorrectes.');
+            return redirect()->route('login/admin')->with('error', 'Les informations de connexion sont incorrectes.');
         }
 
         Auth::login($user);
@@ -60,9 +55,9 @@ class AuthController extends Controller
             $user->password = Hash::make($credentials['password']);
             $user->save();
     
-            return redirect()->route('login')->with('success', 'Votre compte a été créé avec succès.');
+            return redirect()->route('login/admin')->with('success', 'Votre compte a été créé avec succès.');
         } catch (\Exception $e) {
-            return redirect()->route('register')->with('error', 'Une erreur est survenue lors de la création du compte.');
+            return redirect()->route('register/admin')->with('error', 'Une erreur est survenue lors de la création du compte.');
         }
     }
 
