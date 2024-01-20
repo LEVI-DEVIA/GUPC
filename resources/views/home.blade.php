@@ -49,9 +49,10 @@
 						</ul>
 					</li>
 					<li><a href="contact.html">Contact</a></li>
+					<li><a class="btn" href="{{ route('/login/user') }}">Connexion</a></li>
 					@guest
 						<!-- Afficher le bouton de connexion uniquement si l'utilisateur n'est pas connecté -->
-						<li><a class="btn" href="{{ route('/login/user') }}">Connexion</a></li>
+						<!--<li><a class="btn" href="{{ route('/login/user') }}">Connexion</a></li>-->
 					@else
 						<!-- Afficher le nom de l'utilisateur s'il est connecté -->
 						<!-- <li><a href="#">{{ Auth::user()->name }}</a></li>-->
@@ -68,7 +69,13 @@
 			<div class="row">
 				<h1 class="lead">GUICHET UNIQUE DE PERMIS DE CONSTRUIRE </h1>
 				<p class="tagline">Penser à obtenir un permis de construire avant de bâtir, c'est comme planter les fondations solides de votre rêve architectural <a href="http://www.gettemplate.com/?utm_source=progressus&amp;utm_medium=template&amp;utm_campaign=progressus"></a></p>
-				<p> <a  href="formulaire" class="btn btn-action btn-lg" role="button">Optenez un permis de construire </a> </p>
+				@guest
+        			<!-- Afficher le lien vers la page de connexion pour les utilisateurs non connectés -->
+					<p><a href="{{ route('/login/user') }}" class="btn btn-action btn-lg" role="button">Obtenez un permis de construire</a></p>
+				@else
+					<!-- Afficher le lien vers la page de demande de permis pour les utilisateurs connectés -->
+					<p><a href="{{ route('dmpermis') }}" class="btn btn-action btn-lg" role="button">Obtenez un permis de construire</a></p>
+				@endguest
 			</div>
 		</div>
 	</header>

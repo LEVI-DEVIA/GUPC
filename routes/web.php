@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\web\ArchitectsController;
+use App\Http\Controllers\web\Demande_PermisController;
 use App\Http\Controllers\web\UtilisateurController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,5 +44,8 @@ Route::get('/login/user',[ArchitectsController::class,'index'])->name('/login/us
 
 //dashboard_architects
 Route::get('perso',[ArchitectsController::class,'dashboard_architects'])->name('perso');
+
+//permis_construire
+Route::get('dmpermis',[Demande_PermisController::class,'index'])->name('dmpermis');
 
 

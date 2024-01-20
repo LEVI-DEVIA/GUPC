@@ -12,7 +12,7 @@ class Demande_PermisController extends Controller
      */
     public function index()
     {
-        //
+        return view('architects.demandepermis');
     }
 
     /**
