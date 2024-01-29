@@ -15,6 +15,47 @@ class Demande_PermisController extends Controller
         return view('architects.demandepermis');
     }
 
+
+    public function storeForm(Request $request)
+    {
+
+        // Valider les données reçues
+
+        // Section 1
+        $natureProjet = $request->natureProjet;
+        $listeVisage = $request->listeVisage;
+        $class = $request->class;
+        // etc
+
+        // Section 2
+        $demandeur = $request->demandeur; 
+        $adressePostale = $request->adressePostale;
+        
+        // Stocker dans la session  
+        session()->put('section1', [
+            'natureProjet' => $natureProjet,
+            'listeVisage' => $listeVisage,
+            'class' => $class,
+        ]);
+        
+        session()->put('section2', [
+            'demandeur' => $demandeur,
+            'adressePostale' => $adressePostale, 
+            
+        ]);
+
+        
+
+    }
+// Dans app/Http/Controllers/FormController.php
+
+    public function confirmForm() 
+    {
+    $section1 = session()->get('section1');
+    $natureProjet = $section1['natureProjet'];
+
+
+    }
     /**
      * Show the form for creating a new resource.
      */
