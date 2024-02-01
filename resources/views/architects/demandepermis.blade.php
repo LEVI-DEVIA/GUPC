@@ -93,8 +93,8 @@
 </head>
 
 <body>
-
-    <form id="form">
+    @csrf
+    <form id="form" method="POST" action="{{ url('dmpermis') }}">
         <h1>DEMANDE DE PERMIS</h1>
         <div class="section" id="section1">
 

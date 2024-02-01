@@ -3,6 +3,12 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
+use App\Models\AutreInfo;
+use App\Models\Demande_Permis;
+use App\Models\Document;
+use App\Models\InformationDemande;
+use App\Models\InformationDemandeur;
+use App\Models\InformationProprietaire;
 use Illuminate\Http\Request;
 
 class Demande_PermisController extends Controller
@@ -18,43 +24,106 @@ class Demande_PermisController extends Controller
 
     public function storeForm(Request $request)
     {
-
-        // Valider les données reçues
-
         // Section 1
-        $natureProjet = $request->natureProjet;
-        $listeVisage = $request->listeVisage;
-        $class = $request->class;
-        // etc
+        $nom = $request->input('nom');
+        $visa = $request->input('visa');
+        $immo = $request->input('immo');
+        $type_maison = $request->input('type_maison');
 
         // Section 2
-        $demandeur = $request->demandeur; 
-        $adressePostale = $request->adressePostale;
-        
-        // Stocker dans la session  
-        session()->put('section1', [
-            'natureProjet' => $natureProjet,
-            'listeVisage' => $listeVisage,
-            'class' => $class,
-        ]);
-        
-        session()->put('section2', [
-            'demandeur' => $demandeur,
-            'adressePostale' => $adressePostale, 
-            
-        ]);
+        $demandeur_nom = $request->input('demandeur_nom');
+        $demandeur_adresse = $request->input('demandeur_adreseP');
+        $demandeur_adresse2 = $request->input('demandeur_adresseE');
+        $demandeur_tel = $request->input('Tel');
+        $demandeur_type = $request->input('demandeur_type');
 
-        
+        // Section 3
+        $nomP = $request->input('nomP');
+        $nomG = $request->input('nomG');
+        $AdresseG = $request->input('AdresseG');
+        $AdresseE = $request->input('AdresseE');
+        $telP = $request->input('telP');
 
-    }
-// Dans app/Http/Controllers/FormController.php
+        // Section 4
+        $num_tf = $request->input('num_tf');
+        $section = $request->input('section');
+        $lotissement = $request->input('lotissement');
+        $ilot = $request->input('ilot');
+        $lot = $request->input('lot');
+        $nbr_lot = $request->input('nbr_lot');
+        $superficie = $request->input('superficie');
+        $autre = $request->input('autre');
+        $num_acte = $request->input('num_acte');
+        $date_acte = $request->input('date_acte');
 
-    public function confirmForm() 
-    {
-    $section1 = session()->get('section1');
-    $natureProjet = $section1['natureProjet'];
+        // Section 5 - Fichiers
+        if ($request->hasFile('documents')) {
+            $documents = $request->file('documents');
 
+            foreach ($documents as $document) {
+                $name = $document->getClientOriginalName();
+                $path = $document->store('uploads');
 
+                // Enregistrer $name et $path en BDD  
+            }
+        }
+
+        // Traitement en base de données
+        $demande = Demande_Permis::create([]);
+
+        // Section 1
+        $informationDemande = new InformationDemande;
+        $informationDemande->natureProjet = $request->nom;
+        $informationDemande->listeVisage = $request->visa;
+        $informationDemande->class = $request->type_maison;
+        $informationDemande->demande_id = $demande->id;
+        $informationDemande->save();
+
+        // Section 2
+        $informationDemandeur = new InformationDemandeur;
+        $informationDemandeur->demandeur = $request->demandeur_nom;
+        $informationDemandeur->adressePostale = $request->demandeur_adresse;
+        $informationDemandeur->tel = $request->demandeur_tel;
+        $informationDemandeur->typeProprietaire = $request->demandeur_type;
+        $informationDemandeur->demande_id = $demande->id;
+        $informationDemandeur->save();
+
+        // Section 3
+        $informationProprietaire = new InformationProprietaire;
+        $informationProprietaire->proprietaire = $request->nomP;
+        $informationProprietaire->nomGerant = $request->nomG;
+        $informationProprietaire->adressePostale = $request->AdresseG;
+        $informationProprietaire->adresseElectronique = $request->AdresseE;
+        $informationProprietaire->tel = $request->telP;
+        $informationProprietaire->demande_id = $demande->id;
+        $informationProprietaire->save();
+
+        // Section 4
+        $autreInfo = new AutreInfo;
+        $autreInfo->numeroTf = $request->num_tf;
+        $autreInfo->sectionCadastrale = $request->section;
+        $autreInfo->lotissement = $request->lotissement;
+        $autreInfo->lot = $request->lot;
+        $autreInfo->superficie = $request->superficie;
+        $autreInfo->autreTitre = $request->autre;
+        $autreInfo->numActe = $request->num_acte;
+        $autreInfo->dateActe = $request->date_acte;
+        $autreInfo->demande_id = $demande->id;
+        $autreInfo->save();
+
+        // Section 5 - Fichiers
+        if ($request->hasFile('documents')) {
+            $documents = $request->file('documents');
+
+            foreach ($documents as $document) {
+                $doc = new Document();
+                $doc->urlDocuments = $document->store('uploads');
+                $doc->demande_id = $demande->id;
+                $doc->save();
+            }
+        }
+
+        return view('home');
     }
     /**
      * Show the form for creating a new resource.

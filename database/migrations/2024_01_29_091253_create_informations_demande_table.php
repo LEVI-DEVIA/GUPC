@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('natureProjet');
             $table->string('listeVisage');
+            $table->string('operationImmobiliere');
             $table->string('class');
             $table->unsignedBigInteger('demande_id');
             $table->foreign('demande_id')->references('id')->on('demande_permis');
