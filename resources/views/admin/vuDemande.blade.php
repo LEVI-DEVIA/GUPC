@@ -142,20 +142,14 @@
 
 <body>
     <div class="container">
-        <h1>Bienvenue sur l'administration</h1>
+        <h1>Visualisation des Demandes des Achitects</h1>
         <p>Ici, vous pouvez gérer votre site web.</p>
 
         <h2>Gestion des utilisateurs</h2>
-        <button id="createUserBtn">Créer un utilisateur</button>
-
+        
         <form action="{{ route('/login/admin') }}" method="get">
             @csrf
             <button type="submit">Déconnexion</button>
-        </form>
-
-        <form action="{{ route('/admin/vuDemande') }}" method="get">
-            @csrf
-            <button type="submit">Visualiser les Demandes</button>
         </form>
 
 

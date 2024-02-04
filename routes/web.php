@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/ajout',[UtilisateurController::class,'ajouterUtilisateur'])->name('ajout');
 });
 Route::get('/admin',[AdminController::class,'index'])->name('admin');
+Route::get('/admin/vuDemande',[AdminController::class,'vuDemande'])->name('/admin/vuDemande');
 
 
 //login_users
@@ -48,5 +49,6 @@ Route::get('perso',[ArchitectsController::class,'dashboard_architects'])->name('
 //permis_construire
 Route::get('dmpermis',[Demande_PermisController::class,'index'])->name('dmpermis');
 Route::post('dmpermis',[Demande_PermisController::class,'storeForm'])->name('dmpermis');
+
 
 
