@@ -21,7 +21,6 @@ class Demande_PermisController extends Controller
         return view('architects.demandepermis');
     }
 
-
     public function storeForm(Request $request)
     {
         // Section 1
