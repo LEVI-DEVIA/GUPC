@@ -222,8 +222,8 @@
             <input type="text" id="numero" name="num_acte" required>
 
             <label for="paiement">Date de l'acte :</label>
-            <input type="text" id="date" name="date_acte" required>
-
+            <input type="date" id="date" name="date_acte" required>
+                <div></div>
             <button type="button" id="prev-4">Section précédente</button>
             <button type="button" id="next-4">Section suivante</button>
 
