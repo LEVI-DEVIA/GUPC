@@ -156,6 +156,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Id</th>
                     <th>Nom</th>
                     <th>Email</th>
                     <th>Password</th>
@@ -191,16 +192,19 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Récupérer et afficher les utilisateurs au chargement de la page
-            fetch('/dashboard')
+            fetch('/admin/vuDemandeF')
                 .then(response => response.json())
+                // .then(response => console.log(response.json()))
                 .then(users => {
                     const tableBody = document.getElementById('userTableBody');
 
                     users.forEach(user => {
+                       
                         const row = tableBody.insertRow();
-                        row.insertCell(0).textContent = user.name;
-                        row.insertCell(1).textContent = user.email;
-                        row.insertCell(2).textContent = user.password;
+                        row.insertCell(0).textContent = user[0].id;
+                        row.insertCell(1).textContent = user[0].name;
+                        row.insertCell(2).textContent = user[0].email;
+                        row.insertCell(3).textContent = user[0].password;
                     });
                 })
                 .catch(error => {

@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::get('/admin',[AdminController::class,'index'])->name('admin');
 Route::get('/admin/vuDemande',[AdminController::class,'vuDemande'])->name('/admin/vuDemande');
+Route::get('/admin/vuDemandeF',[AdminController::class,'vuDemandeFetch'])->name('/admin/vuDemandeF');
 
 
 //login_users
