@@ -159,7 +159,6 @@
                     <th>Id</th>
                     <th>Nom</th>
                     <th>Email</th>
-                    <th>Password</th>
                 </tr>
             </thead>
             <tbody id="userTableBody">
@@ -182,9 +181,6 @@
             <label for="newUserEmail">Email:</label>
             <input type="email" id="newUserEmail" name="newUserEmail" required>
 
-            <label for="newUserPassword">Password:</label>
-            <input type="text" id="newUserPassword" name="newUserPassword" placeholder="Entrer le password">
-
             <button type="submit">Créer</button>
         </form>
     </div>
@@ -204,7 +200,6 @@
                         row.insertCell(0).textContent = user[0].id;
                         row.insertCell(1).textContent = user[0].name;
                         row.insertCell(2).textContent = user[0].email;
-                        row.insertCell(3).textContent = user[0].password;
                     });
                 })
                 .catch(error => {
@@ -245,7 +240,6 @@
                     // Récupérer les valeurs du formulaire
                     var userName = document.getElementById("newUserName").value;
                     var userEmail = document.getElementById("newUserEmail").value;
-                    var userPassword = document.getElementById("newUserPassword").value;
 
                     // Envoyer la requête POST à la route de création d'utilisateur
                     fetch('/ajout', {
@@ -257,7 +251,6 @@
                             body: JSON.stringify({
                                 name: userName,
                                 email: userEmail,
-                                password: userPassword,
                             }),
                         })
                         .then(response => response.json())
@@ -267,11 +260,9 @@
                             var newRow = tableBody.insertRow(tableBody.rows.length);
                             var nameCell = newRow.insertCell(0);
                             var emailCell = newRow.insertCell(1);
-                            var passwordCell = newRow.insertCell(2);
 
                             nameCell.textContent = data.name;
                             emailCell.textContent = data.email;
-                            passwordCell.textContent = data.password;
 
                             // Fermer la modal et l'overlay après un certain délai (1 seconde dans cet exemple)
                             setTimeout(function() {

@@ -130,7 +130,7 @@ class Demande_PermisController extends Controller
             }
         }
 
-        return view('home');
+        return view('architects.paiement');
     }
     /**
      * Show the form for creating a new resource.
