@@ -1,4 +1,8 @@
 <?php
+namespace App\Http\Controllers\web;
+
+use Exception;
+
 /**
  * CinetPay
  *
@@ -15,7 +19,7 @@
  * @version  
  */
 
- /**
+/**
   * Cinetpay
   * @category cinetpay
   * @package  cinetpay
@@ -285,13 +289,13 @@
         $this->chk_metadata = $StatusPayment['data']['metadata'];
       }
       private function getPayStatusArray($id_transaction,$site_id)
-       {
+      {
           return $dataArray = array(
             'apikey' => $this->apikey,
             'site_id' => $site_id,
             'transaction_id' => $id_transaction);
 
-       }
+      }
       //generate transId
       /**
        * @return int

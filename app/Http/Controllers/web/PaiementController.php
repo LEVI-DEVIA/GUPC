@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\web;
 
-use App\Http\Controllers\Controller;
-use CinetPay;
 use Exception;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\web\CinetPay;
 
 
 class PaiementController extends Controller
@@ -64,9 +64,9 @@ try {
     //notify url
     $notify_url = $commande->index().'cinetpay-sdk-php/notify/notify.php';
     //return url
-    $return_url = $commande->index().'cinetpay-sdk-php/return/return.php';
+    $return_url = env("APP_URL");//$commande->index().'cinetpay-sdk-php/return/return.php';
     $channels = "ALL";
-    
+    // dd(env("APP_URL"));
     /*information supplémentaire que vous voulez afficher
      sur la facture de CinetPay(Supporte trois variables 
      que vous nommez à votre convenance)*/
@@ -102,6 +102,8 @@ try {
 
     $CinetPay = new CinetPay($site_id, $apikey , $VerifySsl=false);//$VerifySsl=true <=> Pour activerr la verification ssl sur curl 
     $result = $CinetPay->generatePaymentLink($formData);
+    // dd($result);
+    // // return redirect()->to($resultat[ ]);
 
     if ($result["code"] == '201')
     {
@@ -110,7 +112,8 @@ try {
         // ajouter le token à la transaction enregistré
         /* $commande->update(); */
         //redirection vers l'url de paiement
-        header('Location:'.$url);
+        // header('Location:'.$url);
+        return redirect()->to($url);
 
     }
 } catch (Exception $e) {
