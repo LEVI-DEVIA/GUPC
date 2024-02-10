@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\web\ArchitectsController;
 use App\Http\Controllers\web\Demande_PermisController;
+use App\Http\Controllers\web\PaiementController;
 use App\Http\Controllers\web\UtilisateurController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,5 +52,9 @@ Route::get('perso',[ArchitectsController::class,'dashboard_architects'])->name('
 Route::get('dmpermis',[Demande_PermisController::class,'index'])->name('dmpermis');
 Route::post('dmpermis',[Demande_PermisController::class,'storeForm'])->name('dmpermis');
 
+
+//paiement_permis_de_construire
+Route::get('paiement',[PaiementController::class,'index'])->name('paiement');
+Route::post('paiements',[PaiementController::class,'paiement'])->name('paiements');
 
 

@@ -1,68 +1,72 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdn.cinetpay.com/seamless/main.js"></script>
-    <style>
-        .sdk {
-            display: block;
-            position: absolute;
-            background-position: center;
-            text-align: center;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-    </style>
-    <script>
-        function checkout() {
-            CinetPay.setConfig({
-                apikey: '',//   YOUR APIKEY
-                site_id: '',//YOUR_SITE_ID
-                notify_url: 'http://mondomaine.com/notify/',
-                mode: 'PRODUCTION'
-            });
-            CinetPay.getCheckout({
-                transaction_id: Math.floor(Math.random() * 100000000).toString(), // YOUR TRANSACTION ID
-                amount: 100,
-                currency: 'XOF',
-                channels: 'ALL',
-                description: 'Test de paiement',   
-                 //Fournir ces variables pour le paiements par carte bancaire
-                customer_name:"Joe",//Le nom du client
-                customer_surname:"Down",//Le prenom du client
-                customer_email: "down@test.com",//l'email du client
-                customer_phone_number: "088767611",//l'email du client
-                customer_address : "BP 0024",//addresse du client
-                customer_city: "Antananarivo",// La ville du client
-                customer_country : "CM",// le code ISO du pays
-                customer_state : "CM",// le code ISO l'état
-                customer_zip_code : "06510", // code postal
 
-            });
-            CinetPay.waitResponse(function(data) {
-                if (data.status == "REFUSED") {
-                    if (alert("Votre paiement a échoué")) {
-                        window.location.reload();
-                    }
-                } else if (data.status == "ACCEPTED") {
-                    if (alert("Votre paiement a été effectué avec succès")) {
-                        window.location.reload();
-                    }
-                }
-            });
-            CinetPay.onError(function(data) {
-                console.log(data);
-            });
-        }
-    </script>
-</head>
-<body>
+<html>
+    <head>
+        <title>CinetPay-SDK-PHP</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+        <link rel="stylesheet" href="../../css/interface.css">
     </head>
-    <body>
-        <div class="sdk">
-            <h1>SDK SEAMLESS</h1>
-            <button onclick="checkout()">Checkout</button>
+
+  <body>
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center">
+            <div class="col-sm-12">
+                <div class="card mx-auto">
+                    <p class="heading">EXEMPLE INTEGRATION PHP</p>
+                    <form action="{{ route('paiements') }}" method="post" class="card-details ">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-0">
+                                    <p class="text-warning mb-0">Nom</p> 
+                                    <input type="text" name="customer_name" id="customer_name" value="Colle"> 
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <p class="text-warning mb-0">Prenom</p>
+                                    <input type="text" name="customer_surname" id="customer_surname" value="Jeremie">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-0">
+                                    <p class="text-warning mb-0">Montant</p> 
+                                    <input type="number" name="amount" id="amount" value="100"> 
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <p class="text-warning mb-0">Devise</p>
+                                    <select class="form-select" name="currency" id="currency">
+                                        <option value="XOF">XOF</option>
+                                      
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+
+                       <div class="row">
+                           <div class="col-sm-12">
+                               <div class="form-group mb-3">
+                                    <p class="text-warning mb-0">Description</p>
+                                    <input type="text" name="description" value="Achat sdk">
+                                </div>
+                           </div>
+                        
+                       </div>
+                       
+
+                      <div class="pt-0"> <button type="submit" name="valider" class="btn btn-success">Valider<i class="fas fa-arrow-right px-3 py-2"></i></button> </div>
+
+                    </form>
+                </div>
+            </div>
         </div>
-    </body>
-</html>  
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>
