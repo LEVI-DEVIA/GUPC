@@ -94,7 +94,7 @@
 
 <body>
     @csrf
-    <form id="form" method="POST" action="{{ url('dmpermis') }}">
+    <form id="form"action="{{ route('paiements') }}" method="POST" >
         <h1>DEMANDE DE PERMIS</h1>
         <div class="section" id="section1">
 
@@ -125,15 +125,18 @@
             <label for="type_maison">Classe :</label>
             <select id="type_maison" name="type_maison">
                 <option value="appartement">NONE</option>
-                <option value="A">Classe A</option>
-                <option value="B">Classe B</option>
-                <option value="C">Classe C</option>
-                <option value="D">Classe D</option>
-                <option value="E">Classe E</option>
-                <option value="F">Classe F</option>
-                <option value="H">Classe H</option>
-                <option value="I">Classe I</option>
-                <option value="J">Classe J</option>
+                <option value="A" data-price="0">Classe A</option>
+                <option value="B" data-price="50000">Classe B</option>
+                <option value="C" data-price="50000">Classe C</option>
+                <option value="D" data-price="50000">Classe D</option>
+                <option value="E" data-price="150000">Classe E</option>
+                <option value="F" data-price="200000">Classe F</option>
+                <option value="H" data-price="300000">Classe g</option>
+                <option value="H" data-price="500000">Classe H</option>
+                <option value="I" data-price="1000000">Classe I</option>
+                <option value="J" data-price="1000000">Classe J</option>
+                <option value="J" data-price="1000000">Classe K</option>
+                <option value="J" data-price="10000">Classe L</option>
             </select> <br>
 
             <button type="button" id="next-1">Section suivante</button>
@@ -255,7 +258,7 @@
             </p>
 
             <button type="button" id="prev-5">Section précédente</button>
-            <button type="button" onclick="submitForm()">Valider</button>
+            <button type="button" name="valider" id="valider" onclick="submitForm()">Valider</button>
         </div>
 
     </form>

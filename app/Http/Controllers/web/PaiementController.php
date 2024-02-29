@@ -40,15 +40,45 @@ class PaiementController extends Controller
      */
     public function paiement(Request $request)
     {
+      
         $commande = new Commande();
 try {
-    if(isset($_POST['valider']))
+// 
+    if($request->input('type_maison') != null)
     {
-        $customer_name =  $request->input('customer_name');
-        $customer_surname = $request->input('customer_surname');
-        $description = $request->input('description');
-        $amount =  $request->input('amount');
-        $currency =  $request->input('currency');
+       
+        $buy = 0;
+        if ( $request->input("type_maison") === "A") {
+            $buy = 0;
+        }elseif ( $request->input("type_maison") === "B" || $request->input("type_maison") === "C" ||$request->input("type_maison") === "D" ) {
+            $buy = 50000;
+        }elseif (  $request->input("type_maison") === "E") {
+            $buy = 150000;
+        }elseif (  $request->input("type_maison") === "F") {
+            $buy = 200000;
+        }
+        elseif (  $request->input("type_maison") == "G") {
+            $buy = 300000;
+        }
+        elseif (  $request->input("type_maison") == "H") {
+            $buy = 500000;
+        }
+        elseif (  $request->input("type_maison") == "I" || $request->input("type_maison") == "J" ||  $request->input("type_maison") == "K") {
+            $buy = 1000000;
+        }
+      elseif (  $request->input("type_maison") == "L") {
+        $buy = 10000;
+        }
+
+
+
+        // dd($request->all());
+        $customer_name =  $request->input('demandeur_nom');
+        $customer_surname = $request->input('demandeur_nom');
+        $description = $request->input('section');
+       
+        $amount =  $buy;
+        $currency =  "XOF";
     }
     else{
         echo "Veuillez passer par le formulaire";
@@ -62,7 +92,7 @@ try {
     $site_id = "5868234";
 
     //notify url
-    $notify_url = $commande->index().'cinetpay-sdk-php/notify/notify.php';
+    $notify_url =  env("APP_URL");
     //return url
     $return_url = env("APP_URL");//$commande->index().'cinetpay-sdk-php/return/return.php';
     $channels = "ALL";
@@ -79,8 +109,8 @@ try {
     //
     $formData = array(
          "transaction_id"=> $id_transaction,
-        "amount"=> $amount,
-        "currency"=> $currency,
+        "amount"=> $buy,
+        "currency"=> "XOF",
         "customer_surname"=> $customer_name,
         "customer_name"=> $customer_surname,
         "description"=> $description,
